@@ -166,7 +166,8 @@ corresponding letters of the message according to the ord of K, E, and Y
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
     result=[]
-    #ensure that length of key is longer than length of message, then slice key to match length of msg
+    #ensure that length of key is longer than length of message, then slice [:len(message)] key to match 
+    #length of msg
     key_upgrade=(key.strip()*(len(message)//len(key.strip())+1))[:len(message)] 
     #in list form, pairs the characters in the message and the key
     for char, letter in zip(message,key_upgrade):

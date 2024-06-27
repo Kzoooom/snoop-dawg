@@ -124,7 +124,36 @@ def tic_tac_toe(board):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    #get the number of lists (which is the also the number of rows and columns since rows=columns)
+    dimensions = len(board) 
+    #this should count how many entities (or lists, in this context) are in the list 
+    #if there are visibly 3 rows, the length of the board should be 3 (or 3x3 if u think about it)
+    
+    #STRAIGHTS
+    for row in board:
+        #row should be the entity or the list in the list
+        if len(set(row))==1 and all(symbol != "" for symbol in row):
+            #this respectively checks if there is only 1 symbol in a row and there are no empty values
+            return row[0] #this returns the winning symbol, aka the first value of the row or nested list
+        
+    length = range(dimensions)
+    #goes through the i-th value of the row, serving as columns
+    for i in length:
+        column = [board[j][i] for j in length]
+        #j is the row (or nested list) and i is the column (or the i-th value in the row)
+        if len(set(column))==1 and all(symbol != "" for symbol in column):
+            return column[0]
+        
+    #DIAGONALS    
+    diagonal_left = [board[i][i] for i in length]
+    diagonal_right = [board[i][dimensions-i-1] for i in length]
+    if len(set(diagonal_left))==1 and all(symbol != "" for symbol in diagonal_left):
+        return diagonal_left[0]
+    if len(set(diagonal_right))==1 and all(symbol != "" for symbol in diagonal_right):
+        return diagonal_right[0]
+    
+    return "NO WINNER"
+
 
 def eta(first_stop, second_stop, route_map):
     '''ETA.
@@ -156,4 +185,20 @@ def eta(first_stop, second_stop, route_map):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    # Check if the destination is directly reachable from the origin
+    if (first_stop, second_stop) in route_map:
+        return route_map[(first_stop, second_stop)]['travel_time_mins']
+    else:
+        # If the destination is not directly reachable, find shortest path
+        # by iterating through the route_map and summing the travel times
+        total_time = 0
+        current_stop = first_stop
+        while current_stop != second_stop:
+            # Find the next stop in the route
+            for stop, travel_info in route_map.items():
+                if stop[0] == current_stop:
+                    next_stop = stop[1]
+                    total_time += travel_info['travel_time_mins']
+                    current_stop = next_stop
+                    break
+        return total_time
