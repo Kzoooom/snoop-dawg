@@ -287,7 +287,7 @@ def scytale_decipher(message, shift):
     result=['']
     length=len(message.upper().strip())
     decrypted_message=result*length
-    for i in range(len(message)):
+    for i in range(length):
         shift_rows=length//shift
         index=(i % shift_rows) * shift + (i // shift_rows)
         decrypted_message[i]=message[index]
